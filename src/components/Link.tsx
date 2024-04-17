@@ -6,7 +6,11 @@ type Props = {
 };
 export const Link = ({ children, href }: Props) => {
   return (
-    <a className="text-blue" href={href}>
+    <a
+      className="text-blue"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer">
       {children}
     </a>
   );
