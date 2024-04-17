@@ -4,7 +4,7 @@ export const UserPath = () => {
   const path = "~/";
 
   return (
-    <div className="font-bold flex">
+    <div className="font-bold flex pr-2">
       <span className="text-yellow">{user}</span>
       <span className="text-white">@</span>
       <span className="text-green">{domain}</span>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { UserPath } from "./components/UserPath";
 import "./index.css";
 import { Help } from "./components/Help";
+import { About } from "./components/About";
 
 function App() {
   const [inputVal, setInputVal] = useState<string>("");
@@ -43,6 +44,8 @@ function App() {
 
   const handleCommand = (command: string) => {
     switch (command) {
+      case "about":
+        return <About />;
       case "help":
         return <Help />;
       default:
@@ -51,7 +54,7 @@ function App() {
   };
 
   return (
-    <div className="font-mono bg-background text-foreground min-h-screen">
+    <div className="font-mono bg-background text-foreground min-h-screen p-2">
       <div id="history">
         {history.map((item) => {
           return (
@@ -65,7 +68,7 @@ function App() {
           );
         })}
       </div>
-      <form className="flex flex-row" onSubmit={handleSubmit}>
+      <form className="flex flex-col sm:flex-row" onSubmit={handleSubmit}>
         <UserPath />
         <input
           className=" px-2 bg-transparent outline-none bg-background text-foreground"
