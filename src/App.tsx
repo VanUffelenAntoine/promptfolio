@@ -8,7 +8,8 @@ function App() {
   const [history, setHistory] = useState<
     { command: string; response: JSX.Element }[]
   >([]);
-  const bottom = useRef<HTMLElement>(null);
+  const bottom = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     bottom.current?.scrollIntoView({ behavior: "smooth" });
@@ -16,6 +17,9 @@ function App() {
 
   useEffect(() => {
     scrollToBottom();
+    document.addEventListener("click", () => {
+      inputRef.current && inputRef.current.focus();
+    });
   }, [history]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +55,7 @@ function App() {
       <div id="history">
         {history.map((item) => {
           return (
-            <div>
+            <div key={item.command}>
               <div className="flex flex-row">
                 <UserPath />
                 <div>{item.command}</div>
@@ -74,6 +78,7 @@ function App() {
           autoCapitalize="off"
           value={inputVal}
           onChange={handleChange}
+          ref={inputRef}
         />
       </form>
       <div ref={bottom}></div>

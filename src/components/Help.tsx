@@ -6,7 +6,7 @@ export const Help = () => {
     <>
       {Object.entries(commands).map((entry) => {
         return (
-          <div>
+          <div key={entry[0]}>
             <div>{entry[0]}</div>
             <div>{entry[1]}</div>
           </div>
