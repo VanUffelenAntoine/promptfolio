@@ -8,6 +8,7 @@ import { Socials } from "./components/Socials";
 import { Whoami } from "./components/Whoami";
 import { Echo } from "./components/Echo";
 import { Projects } from "./components/Projects";
+import { Welcome } from "./components/Welcome";
 
 function App() {
   const [inputVal, setInputVal] = useState<string>("");
@@ -23,17 +24,19 @@ function App() {
 
   useEffect(() => {
     scrollToBottom();
+  }, [history]);
+  useEffect(() => {
     document.addEventListener("click", () => {
       inputRef.current && inputRef.current.focus();
     });
-  }, [history]);
-
+    setHistory([{ command: "welcome", response: handleCommand("welcome") }]);
+  }, []);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputVal(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement> | undefined) => {
+    if (e) e.preventDefault();
     if (inputVal === "clear") {
       setHistory([]);
       setInputVal("");
@@ -52,6 +55,8 @@ function App() {
     const stripped_command = split.shift();
     const args = split.join(" ");
     switch (stripped_command) {
+      case "welcome":
+        return <Welcome />;
       case "projects":
         return <Projects />;
       case "echo":
