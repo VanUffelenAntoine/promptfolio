@@ -1,14 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { UserPath } from "./components/UserPath";
 import "./index.css";
-import { Help } from "./components/Help";
-import { About } from "./components/About";
-import { Education } from "./components/Education";
-import { Socials } from "./components/Socials";
-import { Whoami } from "./components/Whoami";
-import { Echo } from "./components/Echo";
-import { Projects } from "./components/Projects";
-import { Welcome } from "./components/Welcome";
+import { Commands } from "./components/Commands";
 
 function App() {
   const [inputVal, setInputVal] = useState<string>("");
@@ -25,12 +18,16 @@ function App() {
   useEffect(() => {
     scrollToBottom();
   }, [history]);
+
   useEffect(() => {
     document.addEventListener("click", () => {
       inputRef.current && inputRef.current.focus();
     });
-    setHistory([{ command: "welcome", response: handleCommand("welcome") }]);
+    setHistory([
+      { command: "welcome", response: <Commands input={"welcome"} /> },
+    ]);
   }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputVal(e.target.value);
   };
@@ -44,36 +41,10 @@ function App() {
     }
     setHistory([
       ...history,
-      { command: inputVal, response: handleCommand(inputVal) },
+      { command: inputVal, response: <Commands input={inputVal} /> },
     ]);
 
     setInputVal("");
-  };
-
-  const handleCommand = (command: string) => {
-    const split = command.split(" ");
-    const stripped_command = split.shift();
-    const args = split.join(" ");
-    switch (stripped_command) {
-      case "welcome":
-        return <Welcome />;
-      case "projects":
-        return <Projects />;
-      case "echo":
-        return <Echo arg={args} />;
-      case "whoami":
-        return <Whoami user={"guest"} />;
-      case "socials":
-        return <Socials />;
-      case "education":
-        return <Education />;
-      case "about":
-        return <About />;
-      case "help":
-        return <Help />;
-      default:
-        return <div>Unknown command: {command}</div>;
-    }
   };
 
   return (
