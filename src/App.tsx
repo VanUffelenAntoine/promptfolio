@@ -1,11 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { UserPath } from "./components/UserPath";
 import "./index.css";
+import { Help } from "./components/Help";
 
 function App() {
-  const [inputVal, setInputVal] = useState("");
-  const [history, setHistory] = useState<string[]>([]);
-  console.log(inputVal);
+  const [inputVal, setInputVal] = useState<string>("");
+  const [history, setHistory] = useState<
+    { command: string; response: JSX.Element }[]
+  >([]);
+  const bottom = useRef<HTMLElement>(null);
+
+  const scrollToBottom = () => {
+    bottom.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [history]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputVal(e.target.value);
@@ -13,18 +24,39 @@ function App() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setHistory([...history, inputVal]);
+    if (inputVal === "clear") {
+      setHistory([]);
+      setInputVal("");
+      return;
+    }
+    setHistory([
+      ...history,
+      { command: inputVal, response: handleCommand(inputVal) },
+    ]);
+
     setInputVal("");
   };
 
+  const handleCommand = (command: string) => {
+    switch (command) {
+      case "help":
+        return <Help />;
+      default:
+        return <div>Unknown command: {command}</div>;
+    }
+  };
+
   return (
-    <div className="font-mono bg-background text-foreground h-screen">
+    <div className="font-mono bg-background text-foreground min-h-screen">
       <div id="history">
         {history.map((item) => {
           return (
-            <div className="flex flex-row">
-              <UserPath />
-              <div>{item}</div>
+            <div>
+              <div className="flex flex-row">
+                <UserPath />
+                <div>{item.command}</div>
+              </div>
+              <div>{item.response}</div>
             </div>
           );
         })}
@@ -44,6 +76,7 @@ function App() {
           onChange={handleChange}
         />
       </form>
+      <div ref={bottom}></div>
     </div>
   );
 }
