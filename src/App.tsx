@@ -5,6 +5,9 @@ import { Help } from "./components/Help";
 import { About } from "./components/About";
 import { Education } from "./components/Education";
 import { Socials } from "./components/Socials";
+import { Whoami } from "./components/Whoami";
+import { Echo } from "./components/Echo";
+import { Projects } from "./components/Projects";
 
 function App() {
   const [inputVal, setInputVal] = useState<string>("");
@@ -45,7 +48,16 @@ function App() {
   };
 
   const handleCommand = (command: string) => {
-    switch (command) {
+    const split = command.split(" ");
+    const stripped_command = split.shift();
+    const args = split.join(" ");
+    switch (stripped_command) {
+      case "projects":
+        return <Projects />;
+      case "echo":
+        return <Echo arg={args} />;
+      case "whoami":
+        return <Whoami user={"guest"} />;
       case "socials":
         return <Socials />;
       case "education":
