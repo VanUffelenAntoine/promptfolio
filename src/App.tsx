@@ -3,6 +3,8 @@ import { UserPath } from "./components/UserPath";
 import "./index.css";
 import { Help } from "./components/Help";
 import { About } from "./components/About";
+import { Education } from "./components/Education";
+import { Socials } from "./components/Socials";
 
 function App() {
   const [inputVal, setInputVal] = useState<string>("");
@@ -44,6 +46,10 @@ function App() {
 
   const handleCommand = (command: string) => {
     switch (command) {
+      case "socials":
+        return <Socials />;
+      case "education":
+        return <Education />;
       case "about":
         return <About />;
       case "help":
