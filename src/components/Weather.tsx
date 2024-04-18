@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const Weather = ({ args }: Props) => {
-  const [weather, setWeather] = useState<string>("Fetching weather");
+  const [weather, setWeather] = useState<string>("Fetching weather... ");
 
   const updateWeather = async () => {
     setWeather(await getWeather(args));
@@ -17,5 +17,5 @@ export const Weather = ({ args }: Props) => {
     console.log(weather);
   });
 
-  return <pre className="font-mono">{weather}</pre>;
+  return <div>{weather}</div>;
 };
