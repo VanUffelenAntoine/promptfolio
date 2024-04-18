@@ -1,8 +1,6 @@
 import { commands } from "../../utils/commands";
 import { ListItem } from "./ListItem";
 export const Help = () => {
-  console.log(Object.entries(commands));
-
   return (
     <>
       {Object.entries(commands).map((entry) => {

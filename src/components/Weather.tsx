@@ -14,7 +14,6 @@ export const Weather = ({ args }: Props) => {
 
   useEffect(() => {
     updateWeather();
-    console.log(weather);
   });
 
   return <div>{weather}</div>;

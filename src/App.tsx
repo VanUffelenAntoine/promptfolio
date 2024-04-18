@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { UserPath } from "./components/UserPath";
 import "./index.css";
 import { Commands } from "./components/Commands";
@@ -8,6 +8,8 @@ function App() {
   const [history, setHistory] = useState<
     { command: string; response: JSX.Element }[]
   >([]);
+  const [cmdHistory, setCmdHistory] = useState<string[]>([]);
+  const [currComand, setCurrCommand] = useState<number>(0);
   const bottom = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -15,17 +17,41 @@ function App() {
     bottom.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const refocusInput = () => {
+    inputRef.current && inputRef.current.focus();
+  };
+
+  //ToDo: Set input to end of line on arrow up
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault;
+      if (currComand != 0) setCurrCommand(currComand - 1);
+      setInputVal(cmdHistory[currComand - 1] || "");
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault;
+      if (currComand != cmdHistory.length) setCurrCommand(currComand + 1);
+      setInputVal(cmdHistory[currComand + 1] || "");
+    }
+  };
+
   useEffect(() => {
     scrollToBottom();
   }, [history]);
 
   useEffect(() => {
-    document.addEventListener("click", () => {
-      inputRef.current && inputRef.current.focus();
-    });
+    if (cmdHistory.length >= 1)
+      localStorage.setItem("cmdHistory", JSON.stringify(cmdHistory));
+    setCurrCommand(cmdHistory.length);
+  }, [cmdHistory]);
+
+  useEffect(() => {
+    document.addEventListener("click", refocusInput);
     setHistory([
       { command: "welcome", response: <Commands input={"welcome"} /> },
     ]);
+    const localstorageHistory = localStorage.getItem("cmdHistory");
+    console.log(localstorageHistory);
+    if (localstorageHistory) setCmdHistory(JSON.parse(localstorageHistory));
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +60,7 @@ function App() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement> | undefined) => {
     if (e) e.preventDefault();
+    setCmdHistory([...cmdHistory, inputVal]);
     if (inputVal === "clear") {
       setHistory([]);
       setInputVal("");
@@ -50,9 +77,9 @@ function App() {
   return (
     <div className="font-mono bg-background text-foreground min-h-screen p-2">
       <div id="history">
-        {history.map((item) => {
+        {history.map((item, index) => {
           return (
-            <div key={item.command}>
+            <div key={index}>
               <div className="flex flex-row">
                 <UserPath />
                 <div>{item.command}</div>
@@ -76,6 +103,7 @@ function App() {
           value={inputVal}
           onChange={handleChange}
           ref={inputRef}
+          onKeyDown={handleKeyDown}
         />
       </form>
       <div ref={bottom}></div>
