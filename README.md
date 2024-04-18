@@ -1,7 +1,8 @@
 # Terminal style portfolio  
 My portfolio in a more fun and interactive way.  
-It is deployed using [vercel](promptfolio-weld.vercel.app)
-## Running localy  
+It is deployed using [vercel](promptfolio-weld.vercel.app)  
+
+## Running locally  
 Clone the project  
 ```bash
 git clone https://github.com/VanUffelenAntoine/promptfolio
@@ -14,7 +15,7 @@ Remove remote origin
 ```bash
 git remove remove origin
 ```  
-Install dependancies  
+Install dependencies  
 ```bash
 npm install
 ```
