@@ -1,30 +1,30 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+# Terminal style portfolio  
+My portfolio in a more fun and interactive way.  
+It is deployed using [vercel](promptfolio-weld.vercel.app)
+## Running localy  
+Clone the project  
+```bash
+git clone https://github.com/VanUffelenAntoine/promptfolio
+```  
+Go into directory  
+```bash
+cd promptfolio
+```  
+Remove remote origin  
+```bash
+git remove remove origin
+```  
+Install dependancies  
+```bash
+npm install
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Start the server
+```bash
+npm run dev
+```
+## Inspiration and credits  
+The idea came from a video based on this project and his video about it:  
+- [Forrest](https://fkcodes.com)  
+  
+The color scheme is from:  
+- [M4TT72 | Terminal](https://github.com/m4tt72/terminal)  
