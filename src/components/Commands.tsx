@@ -4,6 +4,7 @@ import { Education } from "./Education";
 import { Help } from "./Help";
 import { Projects } from "./Projects";
 import { Socials } from "./Socials";
+import { Weather } from "./Weather";
 import { Welcome } from "./Welcome";
 import { Whoami } from "./Whoami";
 
@@ -15,9 +16,13 @@ export const Commands = ({ input }: Props) => {
   const split = input.split(" ");
   const stripped_command = split.shift()?.toLocaleLowerCase();
   const args = split.join(" ");
+
   switch (stripped_command) {
     case "":
       return <></>;
+    case "weather":
+      if (!args) return <div>Usage: weather [city]</div>;
+      return <Weather args={args} />;
     case "welcome":
       return <Welcome />;
     case "projects":
